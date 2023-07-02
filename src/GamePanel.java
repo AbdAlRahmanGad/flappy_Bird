@@ -21,7 +21,9 @@ public class GamePanel extends JPanel implements Runnable{
     private final int floorY = panelHeight - floorHeight;
 //    240 200 150 100 50
     private int obstaclesX = 200;
+
     private  Image backgroundDay = new ImageIcon("src/sprites/background-day.png").getImage();
+    private  Image background ;
     private  Image backgroundNight = new ImageIcon("src/sprites/background-night.png").getImage();
     private ArrayList<Pipe> pipes = new ArrayList<>();
     private int birdScore = 0;
@@ -32,7 +34,13 @@ public class GamePanel extends JPanel implements Runnable{
     private boolean endGame = false;
     private Bird bird;
     private Score score;
-    GamePanel(int birdColor) throws IOException {
+    GamePanel(int birdColor,int screenMode) throws IOException {
+       startGame(birdColor,screenMode);
+        this.setPreferredSize(new Dimension(panelWidth,panelHeight));
+        this.setVisible(true);
+
+    }
+    public void startGame(int birdColor,int screenMode){
         score = new Score();
         if(birdColor == 0 ){
             bird = new RedBird();
@@ -41,15 +49,14 @@ public class GamePanel extends JPanel implements Runnable{
         }else{
             bird = new YellowBird();
         }
+        if(screenMode == 0){
+            background = backgroundNight;
+        }else{
+            background = backgroundDay;
 
-        this.setPreferredSize(new Dimension(panelWidth,panelHeight));
-        this.setVisible(true);
+        }
         gameStart();
-
         initialzePipes();
-
-
-//        p.set
     }
     private void initialzePipes(){
 
@@ -80,7 +87,7 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D) g;
 
         // background
-            g2.drawImage(backgroundDay, 0, 0, null);
+            g2.drawImage(background, 0, 0, null);
 
             Pipe p1 = pipes.get(0);
 //
@@ -123,6 +130,8 @@ public class GamePanel extends JPanel implements Runnable{
                 g2.drawImage(op.filter(bird.getBirdNow(), null), drawLocationX, drawLocationY, null);
                 if(bird.getBirdY()+bird.getBirdHeight() >= floorY){
                     gameThread = null;
+                   Main.startGame.makeFrame(birdScore);
+
                 }
             }
 
@@ -204,12 +213,8 @@ public class GamePanel extends JPanel implements Runnable{
             birdScore++;
         }
     }
-    private int end = 0;
     private void endGame(){
-//        end = 1;
-//        repaint();
         endGame = true;
-//        gameThread = null;
 
 
     }

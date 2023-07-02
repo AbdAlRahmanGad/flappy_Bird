@@ -1,8 +1,10 @@
 import java.io.IOException;
 
 public class Main {
+    static StartFrame startGame = new StartFrame();
+
     public static void main(String[] args) throws IOException {
-       Frame x =  new Frame();
-       x.createPanel();
+        startGame.makeFrame(-1);
+
     }
 }

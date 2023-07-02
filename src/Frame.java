@@ -6,9 +6,9 @@ public class Frame extends JFrame {
         this.setVisible(true);
         this.setResizable(false);
     }
-    public void createPanel() throws IOException {
+    public void createPanel(int bird,int screenMode) throws IOException {
         GamePanel myPanel ;
-        myPanel = new GamePanel(2);
+        myPanel = new GamePanel(bird,screenMode);
         this.add(myPanel);
         this.pack();
     }

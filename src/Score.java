@@ -15,7 +15,6 @@ public class Score {
     private Image eight = new ImageIcon("src/sprites/8.png").getImage();
     private Image nine = new ImageIcon("src/sprites/9.png").getImage();
     private ArrayList<ArrayList<Image>> score = new ArrayList<>();
-
     private final int scoreY = 51;
     Image[] nums = new Image[]{zero, one, two, three, four, five, six, seven, eight, nine};
 
