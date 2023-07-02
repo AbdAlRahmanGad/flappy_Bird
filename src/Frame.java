@@ -8,7 +8,7 @@ public class Frame extends JFrame {
     }
     public void createPanel() throws IOException {
         GamePanel myPanel ;
-        myPanel = new GamePanel();
+        myPanel = new GamePanel(2);
         this.add(myPanel);
         this.pack();
     }
