@@ -1,3 +1,5 @@
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,7 +8,7 @@ import java.io.IOException;
 
 public class StartFrame extends JFrame implements ActionListener {
     private JButton myButton = new JButton();
-    private int WIDTH = 400;
+    private int WIDTH = 288;
     private int HEIGHT = 300;
 
     private JRadioButton darkMode;
@@ -35,8 +37,8 @@ public class StartFrame extends JFrame implements ActionListener {
         this.setTitle("Main Menu");
         this.setSize(WIDTH,HEIGHT);
         myButton.setSize(WIDTH,50 );
-        darkMode = new JRadioButton("Night Mode");
-        lightMode = new JRadioButton("Day Mode");
+        darkMode = new JRadioButton("Night");
+        lightMode = new JRadioButton("Day");
         screenLabel = new JLabel(" Screen Mode");
         empty1 = new JLabel("");
         empty2 = new JLabel("");
@@ -105,7 +107,7 @@ public class StartFrame extends JFrame implements ActionListener {
         }
         try {
             game.createPanel(birdColor,screenMode);
-        } catch (IOException ex) {
+        } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
             throw new RuntimeException(ex);
         }
 

@@ -1,15 +1,10 @@
-import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class GamePanel extends JPanel implements Runnable{
     /// panel
@@ -34,13 +29,15 @@ public class GamePanel extends JPanel implements Runnable{
     private boolean endGame = false;
     private Bird bird;
     private Score score;
-    GamePanel(int birdColor,int screenMode) throws IOException {
+    private Audios audios;
+    GamePanel(int birdColor,int screenMode) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
        startGame(birdColor,screenMode);
         this.setPreferredSize(new Dimension(panelWidth,panelHeight));
         this.setVisible(true);
 
     }
-    public void startGame(int birdColor,int screenMode){
+    public void startGame(int birdColor,int screenMode) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        audios = new Audios();
         score = new Score();
         if(birdColor == 0 ){
             bird = new RedBird();
@@ -82,6 +79,7 @@ public class GamePanel extends JPanel implements Runnable{
         gameThread = new Thread(this);
         gameThread.start();
     }
+    int temp=0;
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
@@ -90,7 +88,7 @@ public class GamePanel extends JPanel implements Runnable{
             g2.drawImage(background, 0, 0, null);
 
             Pipe p1 = pipes.get(0);
-//
+
             int p = p1.getObstaclesX();
             int x = p;
 
@@ -111,10 +109,15 @@ public class GamePanel extends JPanel implements Runnable{
             g2.drawImage(scoreArray.get(birdScore).get(1),score.getScoreX()  + scoreWidth, score.getScoreY(), null);
             // floor
             g2.drawImage(floor, 0, floorY, null);
-
-            if(!endGame)
-            g2.drawImage(bird.getBirdNow(),bird.getBirdX(),bird.getBirdY(),null);
+            if(!endGame){
+                g2.drawImage(bird.getBirdNow(),bird.getBirdX(),bird.getBirdY(),null);
+            }
             else{
+                if(temp == 0){
+                    audios.playHit();
+                    temp++;
+                }
+
                 bird.addY(4);
                 int drawLocationX = bird.getBirdX();
                 int drawLocationY = bird.getBirdY();
@@ -135,8 +138,9 @@ public class GamePanel extends JPanel implements Runnable{
                 }
             }
 
-        if(endGame)
+        if(endGame){
             g2.drawImage(gameOver,score.getScoreX()-gameOver.getWidth(null)/2 +20, score.getScoreY()*3,null);
+        }
     }
 
 
@@ -155,14 +159,22 @@ public class GamePanel extends JPanel implements Runnable{
 
             lastTime = currentTime;
             if (delta >= 1) {
-                update();
+//                try {
+                try {
+                    update();
+                } catch (LineUnavailableException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
                 repaint();
                 delta--;
             }
         }
     }
+    private void update() throws LineUnavailableException, IOException {
 
-    private void update() {
         InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
         ActionMap am = getActionMap();
         bird.birdControls(am,im);
@@ -205,18 +217,17 @@ public class GamePanel extends JPanel implements Runnable{
         brd %=3;
     }
 
-    private void setScore() {
+    private void setScore(){
         Pipe p1 = pipes.get(stopMoving);
         int p = p1.getObstaclesX();
         if(p == 0 ){
             stopMoving++;
             birdScore++;
+//            audios.playPoint();
         }
     }
     private void endGame(){
         endGame = true;
-
-
     }
 
 }

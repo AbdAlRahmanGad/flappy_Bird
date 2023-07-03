@@ -1,20 +1,14 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public abstract class  Bird {
     private final int birdWidth = 34;
     private final int birdHeight = 24;
     int birdY = 155;
     private int birdX = 57;
-
-//    private Image bird = new ImageIcon("src/sprites/yellowbird-downflap.png").getImage();
     boolean jumpNow = false;
 
     protected    BufferedImage birdNow ;
@@ -86,9 +80,8 @@ public abstract class  Bird {
         this.jumpNow = jumpNow;
     }
 
-    public void birdControls(ActionMap am , InputMap im){
+    public void birdControls(ActionMap am , InputMap im ){
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, false), "jump");
-//        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, true), "jumpReleased");
         am.put("jump", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -96,23 +89,7 @@ public abstract class  Bird {
                 jumpNow = true;
             }
         });
-//        am.put("jumpReleased", new AbstractAction() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                /// 5*10
-//                // 76
-////                jump =0;
-////                now  = 600;
-//
-////                for (int i = 0; i < 10; i++) {
-////                    birdY-=5;
-////
-////                }
-//
-////                now  = birdY+5;
-////                jump =0;
-//            }
-//        });
+
     }
     public boolean birdDeath(int floorY ,  ArrayList<Pipe> pipes){
         int endGame = 0;
