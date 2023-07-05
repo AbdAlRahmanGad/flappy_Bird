@@ -159,7 +159,6 @@ public class GamePanel extends JPanel implements Runnable{
 
             lastTime = currentTime;
             if (delta >= 1) {
-//                try {
                 try {
                     update();
                 } catch (LineUnavailableException e) {
@@ -223,7 +222,6 @@ public class GamePanel extends JPanel implements Runnable{
         if(p == 0 ){
             stopMoving++;
             birdScore++;
-//            audios.playPoint();
         }
     }
     private void endGame(){
