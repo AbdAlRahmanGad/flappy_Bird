@@ -56,7 +56,7 @@ public class StartFrame extends JFrame implements ActionListener {
     }
     public void makeFrame(int score){
         if(score != -1 )
-            scoreLabel.setText("Your score is "+score);
+            scoreLabel.setText("score = "+score);
 
 
         scoreLabel.setForeground(Color.BLACK);

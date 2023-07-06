@@ -19,17 +19,35 @@ public class Score {
     Image[] nums = new Image[]{zero, one, two, three, four, five, six, seven, eight, nine};
 
     Score() {
-        for (int i = 0; i <= 9; i++) {
+        for (int k = 0; k <= 5; k++) {
             ArrayList<Image> temp = new ArrayList<>();
+        if(k != 0 ){
+            temp.add(nums[k]);
+        }
+        for (int i = 0; i <= 9; i++) {
             temp.add(nums[i]);
             for (int j = 0; j <= 9; j++) {
                 temp.add(nums[j]);
                 ArrayList<Image> t = new ArrayList<>();
                 t.add(temp.get(0));
                 t.add(temp.get(1));
+                if(k!=0)
+                t.add(temp.get(2));
                 score.add(t);
+                if(k != 0){
+                    temp.remove(2);
+                }else{
+                    temp.remove(1);
+                }
+            }
+            if(k == 0)
+            temp.remove(0);
+            else {
                 temp.remove(1);
             }
+
+        }
+
         }
     }
 

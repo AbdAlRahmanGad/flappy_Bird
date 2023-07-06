@@ -107,6 +107,11 @@ public class GamePanel extends JPanel implements Runnable{
             g2.drawImage(scoreArray.get(birdScore).get(0), score.getScoreX() , 51, null);
             int scoreWidth = scoreArray.get(birdScore).get(0).getWidth(null);
             g2.drawImage(scoreArray.get(birdScore).get(1),score.getScoreX()  + scoreWidth, score.getScoreY(), null);
+        int scoreWidth2 = scoreArray.get(birdScore).get(1).getWidth(null);
+
+        if(birdScore >= 100){
+            g2.drawImage(scoreArray.get(birdScore).get(2),score.getScoreX()  + scoreWidth2 + scoreWidth, score.getScoreY(), null);
+        }
             // floor
             g2.drawImage(floor, 0, floorY, null);
             if(!endGame){

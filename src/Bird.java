@@ -184,7 +184,7 @@ public abstract class  Bird {
             }
         }
         if(endGame == 1)
-        return true;
+             return true;
         else
             return false;
     }
